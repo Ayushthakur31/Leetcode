@@ -20,21 +20,44 @@ public:
     // }
 
 //Tabulation
+    //     int maxProfit(vector<int>& prices) {
+    //     int n = prices.size();
+    //     vector<vector<int>> dp(n+2,vector<int> (2,0));
+    //      for (int ind = n - 1; ind >= 0; ind--) {
+    //          for (int buy = 0; buy <= 1; buy++){
+    //         int profit;
+    //         if(buy){
+    //             profit = max(-prices[ind] + dp[ind+1][0] , 0 + dp[ind+1][1]);
+    //         }
+    //         else{
+    //             profit = max(prices[ind] + dp[ind+2][1] , 0 + dp[ind+1][0]);
+    //         }
+    //          dp[ind][buy] = profit;
+    //         }
+    //     }
+    //      return dp[0][1];
+    // }
+
+//space optimization
         int maxProfit(vector<int>& prices) {
         int n = prices.size();
-        vector<vector<int>> dp(n+2,vector<int> (2,0));
+        vector<int> prev1(2,0);
+        vector<int> prev2(2,0);
+        vector<int> curr(2,0);
          for (int ind = n - 1; ind >= 0; ind--) {
              for (int buy = 0; buy <= 1; buy++){
             int profit;
             if(buy){
-                profit = max(-prices[ind] + dp[ind+1][0] , 0 + dp[ind+1][1]);
+                profit = max(-prices[ind] + prev1[0] , 0 + prev1[1]);
             }
             else{
-                profit = max(prices[ind] + dp[ind+2][1] , 0 + dp[ind+1][0]);
+                profit = max(prices[ind] + prev2[1] , 0 + prev1[0]);
             }
-             dp[ind][buy] = profit;
+             curr[buy] = profit;
             }
+            prev2 = prev1;
+            prev1 = curr;
         }
-         return dp[0][1];
-    }
+         return curr[1];
+    }    
 };
