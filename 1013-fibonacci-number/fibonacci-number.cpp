@@ -1,13 +1,24 @@
 class Solution {
 public:
-    int f(int n)
-{
+// Recursion
+//     int f(int n){
+//     if (n <= 1)
+//         return n;
+//     return f(n-1) + f(n-2);
+// }    
+//     int fib(int n) {
+//        return f(n);
+//     }
+
+//Memoization
+    int f(int n,vector<int> &dp){
     if (n <= 1)
         return n;
-    return f(n-1) + f(n-2);
+    if(dp[n] != -1) return dp[n];    
+    return f(n-1,dp) + f(n-2,dp);
 }    
-public:
     int fib(int n) {
-       return f(n);
+        vector<int> dp(n+1,-1);
+       return f(n,dp);
     }
 };
