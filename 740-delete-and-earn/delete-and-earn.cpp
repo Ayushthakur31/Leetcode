@@ -39,21 +39,43 @@ public:
     // }
 
 //Tabulation
+    // int deleteAndEarn(vector<int>& nums) {
+    //     int n = nums.size();
+    //     int mx = *max_element(nums.begin(),nums.end());
+    //     vector<int> earn(mx+1,0);
+    //     vector<int> dp(mx+1,0);
+    //         for(int x : nums){
+    //             earn[x] += x;
+    //         }
+    //         dp[0] = earn[0];
+    //         dp[1] = max(earn[0],earn[1]);
+    //         for(int i = 2;i <= mx;i++){
+    //            int pick = earn[i] + dp[i-2];
+    //            int notpick = dp[i-1];
+    //            dp[i] =  max(pick,notpick);
+    //            }
+    //     return dp[mx];
+    // }   
+
+//Space Optimisation
     int deleteAndEarn(vector<int>& nums) {
         int n = nums.size();
         int mx = *max_element(nums.begin(),nums.end());
         vector<int> earn(mx+1,0);
-        vector<int> dp(mx+1,0);
             for(int x : nums){
                 earn[x] += x;
             }
-            dp[0] = earn[0];
-            dp[1] = max(earn[0],earn[1]);
+            if(mx == 0) return earn[0];
+            int prev2 = earn[0];
+            int prev1 = max(earn[0],earn[1]);
             for(int i = 2;i <= mx;i++){
-               int pick = earn[i] + dp[i-2];
-               int notpick = dp[i-1];
-               dp[i] =  max(pick,notpick);
-               }
-        return dp[mx];
-    }    
+               int pick = earn[i] + prev2;
+               int notpick = prev1;
+               int curr =  max(pick,notpick);
+
+              prev2 = prev1;
+              prev1 = curr;             
+         }
+        return prev1;
+    }      
 };
