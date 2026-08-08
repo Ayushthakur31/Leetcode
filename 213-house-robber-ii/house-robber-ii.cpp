@@ -35,16 +35,38 @@ public:
 //     }
 
 //Tabulation
-   int f(int i,int n,vector<int>& nums){
-        vector<int> dp(n+1,0);
-        dp[0] = 0;
-        dp[1] = nums[i];
+//    int f(int i,int n,vector<int>& nums){
+//         vector<int> dp(n+1,0);
+//         dp[0] = 0;
+//         dp[1] = nums[i];
+//         for(int x = 2;x <= n-i;x++){
+//         int pick = nums[i+ x-1] + dp[x-2];
+//         int notpick = dp[x-1];
+//          dp[x] = max(pick,notpick);
+//         }
+//         return dp[n-i];
+//     }
+//    int rob(vector<int>& nums) {
+//         int n = nums.size();
+//         if(n == 1) return nums[0];
+//         int case1 = f(0,n-1,nums);
+//         int case2 = f(1,n,nums);
+//         return max(case1,case2);
+//     }
+
+//Space Optimisation
+    int f(int i,int n,vector<int>& nums){
+        int prev2 = 0;
+        int prev1 = nums[i];
         for(int x = 2;x <= n-i;x++){
-        int pick = nums[i+ x-1] + dp[x-2];
-        int notpick = dp[x-1];
-         dp[x] = max(pick,notpick);
+        int pick = nums[i+ x-1] + prev2;
+        int notpick = prev1;
+        int curr = max(pick,notpick);
+
+        prev2 = prev1;
+        prev1 = curr;
         }
-        return dp[n-i];
+        return prev1;
     }
    int rob(vector<int>& nums) {
         int n = nums.size();
