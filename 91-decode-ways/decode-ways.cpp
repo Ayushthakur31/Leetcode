@@ -39,23 +39,44 @@ public:
     // }  
 
 //Tabulation
-    int numDecodings(string s) {
+//     int numDecodings(string s) {
+//         int n = s.size();
+//         vector<int> dp(n+1,0);
+//         dp[n] = 1;
+//         for(int i = n-1;i >= 0;i--){
+//             if(s[i] == '0') {
+//             dp[i] = 0;
+//             continue;
+// }
+//          dp[i] = dp[i+1];
+
+//         if(i+1 < n){
+//             int num = (s[i] - '0') * 10 + s[i+1] - '0';
+//         if(num >=10 && num <= 26)
+//         dp[i] += dp[i+2];
+//         }
+//         }
+//         return dp[0];
+//     }      
+
+//Space Optimisation
+     int numDecodings(string s) {
         int n = s.size();
-        vector<int> dp(n+1,0);
-        dp[n] = 1;
+        int next2 = 0;
+        int next1 = 1;
         for(int i = n-1;i >= 0;i--){
-            if(s[i] == '0') {
-            dp[i] = 0;
-            continue;
-}
-         dp[i] = dp[i+1];
+            int curr = 0;
+         if(s[i] != '0')
+         curr = next1;
 
         if(i+1 < n){
             int num = (s[i] - '0') * 10 + s[i+1] - '0';
         if(num >=10 && num <= 26)
-        dp[i] += dp[i+2];
+        curr += next2;
         }
+        next2 = next1;
+        next1 = curr;
         }
-        return dp[0];
-    }      
+        return next1;
+    }    
 };
