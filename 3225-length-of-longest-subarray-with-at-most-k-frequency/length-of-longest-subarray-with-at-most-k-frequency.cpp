@@ -4,13 +4,13 @@ public:
         unordered_map<int,int> mpp;
         int maxi = 0;
         int left = 0;
-        for(int i = 0;i < nums.size();i++){
-            mpp[nums[i]]++;
-        while(mpp[nums[i]] > k){
+        for(int right = 0;right < nums.size();right++){
+            mpp[nums[right]]++;
+        while(mpp[nums[right]] > k){
             mpp[nums[left]]--;
             left++;
         }
-        maxi = max(maxi,i-left+1);
+        maxi = max(maxi,right-left+1);
         }
         return maxi;
     }
