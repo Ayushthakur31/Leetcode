@@ -23,6 +23,7 @@ public:
         }
         ListNode* todelete = second->next;
         second->next = second->next->next;
+        delete todelete;
         return dummy->next;
     }
 };
